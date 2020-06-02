@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>SSTIC 2020 &raquo; Live stream</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="SSTIC 2020 Live video stream">
+	<meta name="keywords" content="SSTIC, stream, conférence, symposium, sécurité, SSI, security, conference, infosec">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<link rel="stylesheet" href="js/bootstrap/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+	<style type="text/css" media="screen">
+	body {
+		font-family: Arial, "MS Trebuchet", sans-serif;
+	}
+	</style>
+
+	<script type="text/javascript" src="js/clappr/clappr.min.js"></script>
+	<script src="js/jquery/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<div class="container" style="width: 100%; margin: auto;">
+		<div class="row">
+			<h2 style='text-align: center;'>SSTIC 2020 - Live stream</h2>
+		</div>
+		
+		<div id="tabs" class="row">
+			
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" href="#home" role="tab">Conference (HTML5)</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#stream-urls" role="tab">Raw Stream URLs</a>
+				</li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				
+				<!--
+					MAIN PLAYER TAB
+				-->
+				<div class="tab-pane fade in active" id="home" role="tabpanel">
+					
+					<div class="row" id="livestream_player">
+						<div class="col-lg-10" id="player">
+						</div>
+						
+						<div class="col-lg-2">
+							
+							<div class="col-lg-12">&nbsp;</div>
+							<h5 style="text-align: center;">HLS</h5>
+							<button id="src1" type="button" class="btn col-lg-12 btn-secondary" onclick='javascript:switchStreamSource(this.id);'>540p@1M</button>
+							<button id="src2" type="button" class="btn col-lg-12 btn-secondary" onclick='javascript:switchStreamSource(this.id);'>720p@2M</button>
+							<button id="src3" type="button" class="btn col-lg-12 btn-secondary" onclick='javascript:switchStreamSource(this.id);'>1080p@4M</button>
+							<div class="col-lg-12" style="font-size: 0.8em; text-align: center;">
+								<i>~30-60s delay in HLS</i>
+							</div>
+							
+							<div class="col-lg-12">&nbsp;</div>
+							<h5 style="text-align: center;">Time shift</h5>
+							<button id="sync" type="button" class="btn col-lg-12 btn-success-outline" onclick='javascript:forceSyncLive();'>Sync to live</button>
+							<div class="col-lg-12" style="font-size: 0.8em; text-align: center;">
+								<i>Use player controls to seek about 15 minutes of buffer (if available)</i>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-10">
+							<p style="font-size: 0.8em; text-align: center; font-style: italic;">
+								Change quality settings if you encounter buffering, long loading times, or stuttering.
+								<br/>
+								Sync to live, refresh page or use a standalone player if you encounter blank video/time issues.
+							</p>
+						</div>
+						<div class="col-lg-2">
+							&nbsp;
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-10">
+							<h5 style='text-align: center;'>Live chat with authors</h5>
+							<p style="font-size: 0.8em; text-align: center; font-style: italic;">
+								If the webchat client isn't loading, you can join by
+								<a href="https://kiwiirc.com/nextclient/chat.freenode.net/?#sstic-qa,#sstic-posezvosquestions,#sstic">clicking on this link</a>.
+							</p>
+							<iframe src="https://kiwiirc.com/nextclient/chat.freenode.net/?#sstic-qa,#sstic-posezvosquestions,#sstic" 
+								style="border:0; width:100%; height:450px;"></iframe>
+						</div>
+					</div>
+				</div>
+				
+				<!--
+					STREAM URLs TAB
+				-->
+				<div class="tab-pane fade" id="stream-urls" role="tabpanel">
+					<div class="row">
+						<div class="col-lg-2">
+						</div>
+						<div class="col-lg-8">
+							<div>
+								<p>
+									Available streams are listed below. To watch:
+								</p>
+								<ul>
+									<li>RTMP: open the desired stream URL with mplayer or VLC</li>
+									<li>HLS: open the desired stream URL with mplayer, VLC, Quicktime, Safari or an iOS / Android web browser</li>
+								</ul>
+				
+								<table style="width: 100%; border-style: none; text-align: center;">
+									<tbody><tr>
+										<th style="text-align: center;">Quality</th>
+										<th style="text-align: center;">HLS (TCP/80)</th>
+										<th style="text-align: center;">RTMP (TCP/1935)</th>
+									</tr>
+									<tr>
+										<td>Automatic</td>
+										<td><a id="link-src7" href="http://streaming.sstic.org/hls/live.m3u8">live.m3u8</a></td>
+										<td>-</td>
+									</tr>
+									<tr>
+										<td>1080p @ 4 Mbits/s</td>
+										<td><a id="link-src3" href="http://streaming.sstic.org/hls/live_hi/index.m3u8">live_hi/index.m3u8</a></td>
+										<td><a id="link-src6" href="rtmp://streaming.sstic.org/hls/live_hi">live_hi</a></td>
+									</tr>
+									<tr>
+										<td>720p @ 2 Mbits/s</td>
+										<td><a id="link-src2" href="http://streaming.sstic.org/hls/live_mid/index.m3u8">live_mid/index.m3u8</a></td>
+										<td><a id="link-src5" href="rtmp://streaming.sstic.org/hls/live_mid">live_mid</a></td>
+									</tr>
+									<tr>
+										<td>540p @ 1 Mbits/s</td>
+										<td><a id="link-src1" href="http://streaming.sstic.org/hls/live_low/index.m3u8">live_low/index.m3u8</a></td>
+										<td><a id="link-src4" href="rtmp://streaming.sstic.org/hls/live_low">live_low</a></td>
+									</tr>
+								</tbody></table>
+								<br>
+								<ul>
+									<li>The HTML5 player uses HLS only</li>
+									<li>Stream delay varies between 5-10 seconds (RTMP) and 30-60 seconds (HLS)</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-2">
+						</div>
+					</div>
+				</div>
+				
+				<!--
+					END TABs
+				-->
+			</div>
+			
+			
+		</div>
+		
+		<div class="row">
+			&nbsp;
+		</div>
+		<div class="row">
+			<p style='text-align: center; font-size: 0.8em;'><a href="https://www.sstic.org/">https://www.sstic.org/</a> || June 3-5, 2020, Rennes (France) || <a href="https://www.sstic.org/2020/programme/">Schedule (CEST)</a></p>
+		</div>
+		
+	</div>
+
+	<script src="js/bootstrap/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+			<script>
+			        var streamhost = window.location.host;
+			        var streamproto = window.location.protocol;
+				var player = new Clappr.Player({
+					source: streamproto+"//"+streamhost+"/hls/live_mid/index.m3u8",  // application/x-mpegURL
+					parentId: "#player", 
+					width: "auto",
+					height: "540",
+					autoPlay: true,
+					baseUrl: "js/clappr",
+				});
+				
+				sources = {
+					"src1": {type: "application/x-mpegURL", src: streamproto+"//"+streamhost+"/hls/live_low/index.m3u8"},
+					"src2": {type: "application/x-mpegURL", src: streamproto+"//"+streamhost+"/hls/live_mid/index.m3u8"},
+					"src3": {type: "application/x-mpegURL", src: streamproto+"//"+streamhost+"/hls/live_hi/index.m3u8"},
+					"src4": {type: "rtmp/mp4", src: "rtmp://"+streamhost+"/hls/live_low"},
+					"src5": {type: "rtmp/mp4", src: "rtmp://"+streamhost+"/hls/live_mid"},
+					"src6": {type: "rtmp/mp4", src: "rtmp://"+streamhost+"/hls/live_hi"},
+					"src7": {type: "application/x-mpegURL", src: streamproto+"//"+streamhost+"/hls/live.m3u8"},
+				};
+				
+				function switchClass(e) {
+					
+					$('.btn').removeClass('btn-primary');
+					$('.btn').removeClass('btn-secondary');
+					$('.btn').addClass('btn-secondary');
+					$('#'+e).removeClass('btn-secondary').addClass('btn-primary');
+					
+					/*
+					$('.nav-link').removeClass('active');
+					$('#sync').addClass('active');
+					$('#'+e).addClass('active');
+					*/
+					return true;
+				}
+				
+				function switchStreamSource(e) {
+					//switchClass(e);
+					//player.src(sources[e]);
+					switchClass(e);
+					player.load(sources[e].src);
+					player.play();
+					player.seekPercentage(100);
+					
+					//confirmCurrentSource();
+					return true;
+				}
+				
+				function confirmCurrentSource() {
+					jQuery.each(sources, function(i, val) {
+						if(player.options.sources[0] == val.src) {
+							switchClass(i);
+						}
+					});
+					return true;
+				}
+				
+				function forceSyncLive() {
+					player.pause();
+					player.seekPercentage(0);
+					player.play();
+					player.seekPercentage(100);
+					$('#sync').fadeIn(200).fadeOut(200).fadeIn(200).fadeOut(200).fadeIn(200);
+					return true;
+				}
+				/*
+				player.ready(function(){
+					this.play();
+					this.seekPercentage(100);
+					
+					confirmCurrentSource();
+				});
+				*/
+				
+				$('#src2').removeClass('btn-secondary').addClass('btn-primary');
+				//$('#src2').addClass('active');
+				
+				jQuery.each(sources, function(i, val) {
+					$('#link-'+i).attr("href", val.src);
+				});
+				
+				player.on(Clappr.Events.PLAYER_READY, function(a) {
+					player.play();
+					player.seekPercentage(100);
+				});
+				
+				$(function(){
+					var hash = window.location.hash;
+					hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+					$('.nav-tabs a').click(function (e) {
+						$(this).tab('show');
+						var scrollmem = $('body').scrollTop();
+						window.location.hash = this.hash;
+						$('html,body').scrollTop(scrollmem);
+					});
+				});
+			</script>
+
+</body>
+</html>
