@@ -23,15 +23,15 @@ RUN apk add --update \
 
 RUN cd /tmp && \
     wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
-    tar zxf nginx-${NGINX_VERSION}.tar.gz && \
-    rm nginx-${NGINX_VERSION}.tar.gz
+    tar zxf nginx-${NGINX_VERSION}.tar.gz && rm nginx-${NGINX_VERSION}.tar.gz && \
+    mv /tmp/nginx-${NGINX_VERSION} /tmp/nginx
 
 RUN cd /tmp && \
     wget https://github.com/arut/nginx-rtmp-module/archive/v${NGINX_RTMP_VERSION}.tar.gz && \
     tar zxf v${NGINX_RTMP_VERSION}.tar.gz && rm v${NGINX_RTMP_VERSION}.tar.gz && \
     mv /tmp/nginx-rtmp-module-${NGINX_RTMP_VERSION} /tmp/nginx-rtmp-module
 
-RUN cd /tmp/nginx-${NGINX_VERSION} && \
+RUN cd /tmp/nginx && \
     ./configure \
     --prefix=/opt/nginx \
     --add-module=/tmp/nginx-rtmp-module \
@@ -41,7 +41,6 @@ RUN cd /tmp/nginx-${NGINX_VERSION} && \
     --with-debug \
     --with-http_stub_status_module \
     --with-cc-opt="-Wimplicit-fallthrough=0" && \
-    cd /tmp/nginx-${NGINX_VERSION} && \
     make && make install
 
 
@@ -57,8 +56,8 @@ RUN wget -O player.tgz https://gitlab.com/sstic/streaming-infra/-/archive/master
 
 
 FROM alpine:latest
-RUN apk update && \
-    apk add \
+
+RUN apk add --update \
             openssl \
             libstdc++ \
             ca-certificates \
