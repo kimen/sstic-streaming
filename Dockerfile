@@ -1,4 +1,4 @@
-FROM alpine:latest as builder
+FROM alpine:latest as nginx_builder
 
 ARG NGINX_VERSION=1.16.1
 ARG NGINX_RTMP_VERSION=1.2.1
@@ -44,6 +44,18 @@ RUN cd /tmp/nginx-${NGINX_VERSION} && \
     cd /tmp/nginx-${NGINX_VERSION} && \
     make && make install
 
+
+FROM alpine:latest as player_builder
+
+RUN apk add --update \
+            ca-certificates \
+	    wget
+
+# Fetching the player from sstic's gitlab
+RUN wget -O player.tgz https://gitlab.com/sstic/streaming-infra/-/archive/master/streaming-infra-master.tar.gz?path=player && \
+    tar xvzf player.tgz && mv streaming-infra-master-player/player /player
+
+
 FROM alpine:latest
 RUN apk update && \
     apk add \
@@ -52,10 +64,16 @@ RUN apk update && \
             ca-certificates \
             pcre
 
-COPY --from=0 /opt/nginx /opt/nginx
-COPY --from=0 /tmp/nginx-rtmp-module/stat.xsl /opt/nginx/conf/stat.xsl
+# Getting nginx from the build container
+COPY --from=nginx_builder /opt/nginx /opt/nginx
+# Getting the player from the build container
+COPY --from=player_builder --chown=nobody:nobody /player /var/www/player/
+# Copying the nginx configuration from the local repo
 COPY nginx.conf /opt/nginx/conf/nginx.conf
-COPY --chown=nobody:nobody player /var/www/player/
+
+# Preparing the hls directory
+RUN mkdir /var/www/hls
+VOLUME /var/www/hls
 
 EXPOSE 1935
 EXPOSE 8080
